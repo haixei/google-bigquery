@@ -40,7 +40,7 @@ ORDER BY iteration
 # Quick note: The BQ does the automatc stopping for us as well as increasing the learning rate
 # according to the situation
 tr_stats = query_job_tr_stats.result()
-print('Training statistics: ', tr_stats.to_dataframe())
+print('Training statistics:', tr_stats.to_dataframe())
 
 # Model evaluation
 query_job_eval = client.query(f'''
@@ -61,7 +61,7 @@ FROM
 ''')
 
 model_eval = query_job_eval.result()
-print('Evaluation scores: \n ', model_eval.to_dataframe())
+print('Evaluation scores:\n', model_eval.to_dataframe())
 
 # Showcase the ROC curve
 query_job_curve = client.query(f'''
@@ -72,4 +72,30 @@ FROM
 
 roc = query_job_curve.result().to_dataframe()
 plt.plot(roc.false_positive_rate, roc.recall)
-plt.show()
+# >> plt.show()
+
+# Use the model to make predictions
+query_job_pred = client.query(f'''
+SELECT
+    country,
+    SUM(predicted_label) as total_predicted_purchases
+FROM 
+    ML.PREDICT(MODEL `{model_name}`, (
+        SELECT
+            IF(totals.transactions IS NULL, 0, 1) AS label,
+            IFNULL(device.operatingSystem, "") AS os,
+            device.isMobile AS is_mobile,
+            IFNULL(geoNetwork.country, "") AS country,
+            IFNULL(totals.pageviews, 0) AS pageviews
+        FROM
+            `{table_name}`
+        WHERE
+            _TABLE_SUFFIX BETWEEN '20160801' AND '20170630'
+    ))
+GROUP BY country
+ORDER BY total_predicted_purchases DESC
+LIMIT 10
+''')
+
+print('Predictions:\n', query_job_pred.result().to_dataframe())
+
