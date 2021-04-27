@@ -1,5 +1,9 @@
 import matplotlib.pyplot as plt
-from main import client, model_name
+from main import client
+import os
+
+# Select the model
+model_name = os.getenv('TEST_MODEL')
 
 # Load the data
 table_name = 'bigquery-public-data.google_analytics_sample.ga_sessions_*'

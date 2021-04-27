@@ -7,7 +7,6 @@ load_dotenv()
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv('KEY_ROUTE')
 project_id = os.getenv('PROJECT_ID')
-model_name = os.getenv('MODEL_NAME')
 
 # Connect
 client = bigquery.Client(project=project_id)
