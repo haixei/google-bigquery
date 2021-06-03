@@ -1,4 +1,6 @@
-![Header image](https://i.imgur.com/iaHnXHG.png)
+![Finished](https://i.imgur.com/hzCFhps.png)
+![Cloud Project](https://i.imgur.com/INarVnQ.png)
+
 # BigQuery Tests
 This repository consists of a few files where I locally tried out Google's Big Query functions, they are quite straightforward so you can use them for learning purposes.
 Don't forget to create a .env file with following variables:
