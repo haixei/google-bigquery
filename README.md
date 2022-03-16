@@ -1,5 +1,4 @@
-![Finished](https://i.imgur.com/hzCFhps.png)
-![Cloud Project](https://i.imgur.com/INarVnQ.png)
+![License: MIT](https://img.shields.io/badge/License-MIT-%23E6F0FD)
 
 # BigQuery Tests
 This repository consists of a few files where I locally tried out Google's Big Query functions, they are quite straightforward so you can use them for learning purposes.
